@@ -174,7 +174,7 @@ class MagicMask {
       for (Map<String, String> tag in _tags) tag['readed'] = '';
 
       String cleared = clearMask(text);
-      cleared = _clearPlaceHolder(cleared);
+      if (cleared != _placeholder) cleared = _clearPlaceHolder(cleared);
       if (cleared.isEmpty) return _buildResultJson('', 0, maxLenght);
       Map<String, dynamic> res = _proccessMask(cleared, maxLenght);
       if (res['overflow'] == false) return res;
