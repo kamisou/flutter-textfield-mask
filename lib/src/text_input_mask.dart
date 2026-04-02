@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'magic_mask.dart';
@@ -46,26 +45,32 @@ class TextInputMask extends TextInputFormatter {
   ///
   /// When passing an array of String as mask, the first mask applyed is the shortest going to longest.
   /// It will apply the next mask (bigger one, only when the typed text overflow the previous mask)
-  TextInputMask(
-      {this.mask,
-      this.reverse = false,
-      this.maxLength = -1,
-      this.placeholder = '',
-      this.maxPlaceHolders = -1}) {
+  TextInputMask({
+    this.mask,
+    this.reverse = false,
+    this.maxLength = -1,
+    this.placeholder = '',
+    this.maxPlaceHolders = -1,
+  }) {
     magicMask = MagicMask.buildMask(mask);
   }
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     try {
-      return TextEditingValue.fromJSON(magicMask.executeMasking(
+      return TextEditingValue.fromJSON(
+        magicMask.executeMasking(
           newValue.text,
           newValue.selection.baseOffset,
           reverse,
           maxLength,
           placeholder,
-          maxPlaceHolders));
+          maxPlaceHolders,
+        ),
+      );
     } catch (e) {
       print(e);
     }

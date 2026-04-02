@@ -12,7 +12,7 @@ class MagicMask {
   static const String _token = 'token';
   static const String _tokenOpt = 'optionalToken';
   static const String _multiple = 'multiple';
-  static const String _multipleOpt = 'multiple';
+  static const String _multipleOpt = 'optionalMultiple';
 
   late bool _reverse;
   bool _overflow = false;
@@ -81,11 +81,13 @@ class MagicMask {
       _curTag += 1;
     }
 
-    _allTags.sort((maskA, maskB) => maskA.length > maskB.length
-        ? 1
-        : maskA.length == maskB.length
-            ? 0
-            : -1);
+    _allTags.sort(
+      (maskA, maskB) => maskA.length > maskB.length
+          ? 1
+          : maskA.length == maskB.length
+          ? 0
+          : -1,
+    );
   }
 
   void _processMask(String mask) {
@@ -126,10 +128,20 @@ class MagicMask {
   /// [maxPlaceHolderCharacters] Numbers of times the placeholder could be counted. A typed character consumes a count.
   ///
   /// It returns a formatted String.
-  String getAdvancedMaskedString(String text, int maxLenght, String placeholder,
-      int maxPlaceHolderCharacters) {
-    return executeMasking(text, 0, false, maxLenght, placeholder,
-        maxPlaceHolderCharacters)['text'];
+  String getAdvancedMaskedString(
+    String text,
+    int maxLenght,
+    String placeholder,
+    int maxPlaceHolderCharacters,
+  ) {
+    return executeMasking(
+      text,
+      0,
+      false,
+      maxLenght,
+      placeholder,
+      maxPlaceHolderCharacters,
+    )['text'];
   }
 
   /// [text] is the mask to be formatter on mask.
@@ -149,12 +161,13 @@ class MagicMask {
   /// ```
   ///
   Map<String, dynamic> executeMasking(
-      String? text,
-      int cursorPosition,
-      bool reverse,
-      int maxLenght,
-      String placeholder,
-      int maxPlaceHolderCharacters) {
+    String? text,
+    int cursorPosition,
+    bool reverse,
+    int maxLenght,
+    String placeholder,
+    int maxPlaceHolderCharacters,
+  ) {
     if (text == null || text.isEmpty || _tags.length == 0)
       return _buildResultJson('', 0, maxLenght);
     _reverse = reverse;
@@ -187,8 +200,9 @@ class MagicMask {
     String cleared = text;
     int index = _reverse ? 0 : text.length - 1;
     while (index >= 0 && index < text.length && text[index] == _placeholder) {
-      cleared =
-          _reverse ? text.substring(1) : text.substring(0, text.length - 1);
+      cleared = _reverse
+          ? text.substring(1)
+          : text.substring(0, text.length - 1);
       index -= _step;
     }
     return cleared;
@@ -249,8 +263,10 @@ class MagicMask {
       _tagIndex += _step;
     }
 
-    _cursorPosition =
-        min(_cursorPosition + _charDeslocation, _maskedText.length);
+    _cursorPosition = min(
+      _cursorPosition + _charDeslocation,
+      _maskedText.length,
+    );
     return _buildResultJson(_maskedText, _cursorPosition, maxLenght);
   }
 
@@ -339,7 +355,10 @@ class MagicMask {
   }
 
   Map<String, dynamic> _buildResultJson(
-      String text, int cursorPos, int maxLengh) {
+    String text,
+    int cursorPos,
+    int maxLengh,
+  ) {
     if (maxLengh > 0) {
       if (_reverse) {
         text = text.substring(max(0, text.length - maxLengh));
@@ -351,7 +370,7 @@ class MagicMask {
       "text": text,
       "selectionBase": max(0, cursorPos),
       "selectionExtent": max(0, cursorPos),
-      "overflow": _overflow
+      "overflow": _overflow,
     };
   }
 }
