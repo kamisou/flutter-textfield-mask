@@ -6,7 +6,7 @@ description: TextInputMask ready to be used just passing a String patterned para
 homepage: https://github.com/danilocoppi/flutter-textfiled-mask
 
 environment:
-  sdk: ">=3.11.4 <4.0.0"
+  sdk: ">=3.10.1 <4.0.0"
 
 dependencies:
   easy_mask:
@@ -20,5 +20,3 @@ dev_dependencies:
     
 flutter:
   uses-material-design: true
-
-
