@@ -5,7 +5,7 @@ description: Easy and Powerful Mask for TextField, TextFormField and Strings. Ha
 homepage: https://github.com/danilocoppi/flutter-textfield-mask
 
 environment:
-  sdk: ">=3.11.4 <4.0.0"
+  sdk: ">=3.10.1 <4.0.0"
 
 dependencies:
   flutter:
